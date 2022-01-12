@@ -8,12 +8,21 @@
     <artifactId>EMS_maven_spring_mybatis</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <packaging>war</packaging>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <!--aop、beans、context、core等依赖均被包含进来-->
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.2.13.RELEASE</version>
+        </dependency>
         <!--jar依赖管理-->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
+            <!--注意！：tomcat中已经提供了servlet相关jar包，这里需要将范围设置为provided-->
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -26,15 +35,15 @@
 
     <build>
         <plugins>
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-compailer-plugin</artifactId>-->
-                <!--<version>3.8.0</version>-->
-                <!--<configuration>-->
-                    <!--<source>1.8</source>-->
-                    <!--<target>1.8</target>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
