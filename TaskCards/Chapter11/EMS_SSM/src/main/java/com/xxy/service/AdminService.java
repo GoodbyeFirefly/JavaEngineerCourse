@@ -1,27 +1,27 @@
+package com.xxy.service;
+
 import com.xxy.mapper.AdminMapper;
 import com.xxy.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
 
 import java.util.Date;
 
-public class DaoTest {
-
-    @Test
-    public void AdminMapperTest() {
+public class AdminService {
+    public static boolean login(String username, String password) {
         SqlSession sqlSession = MybatisUtil.getSqlSession();
         AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-        String login = adminMapper.login("admin", "1234");
-        if (login == null) System.out.println("false");
-        else System.out.println("true");
+
+        String login = adminMapper.login(username, password);
+
         sqlSession.close();
+        return login != null;
     }
-
-    @Test
-    public void AdminLoginUpdateTest() {
+    public static void updateLoginTime(String username, Date loginTime, String ip) {
         SqlSession sqlSession = MybatisUtil.getSqlSession();
         AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-        adminMapper.updateLoginTime("admin", new Date(), "127.0.0.1");
+
+        adminMapper.updateLoginTime(username, loginTime, ip);
+
         sqlSession.close();
     }
 }
