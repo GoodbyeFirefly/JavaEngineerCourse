@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="名称必须与映射的接口的名字一致，是完全限定名"-->
+<mapper namespace="com.xxy.mapper.AdminMapper">
+    <select id="login" resultType="string">
+        SELECT ID FROM EADMIN WHERE USERNAME=#{username} AND PASSWORD=#{password}
+    </select>
+
+    <update id="updateLoginTime">
+        UPDATE EADMIN SET LOGINTIME=#{logintime},LOGINIP=#{ip} WHERE USERNAME=#{username}
+    </update>
+
+</mapper>
