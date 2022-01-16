@@ -4,24 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-    <!--配置 mybatis环境-->
-    <environments default="development">
-        <!--id：数据源的名称-->
-        <environment id="development">
-            <!--事务类型：使用JDBC事务，使用Connection的提交和回滚-->
-            <transactionManager type="JDBC"></transactionManager>
-            <!--数据源datasource：创建数据库的connection对象-->
-            <dataSource type="POOLED">
-                <!--连接数据库的四大参数：driver、url、username、password。具体配置需要依照对应版本而定-->
-                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/ems?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=GMT"/>
-                <property name="username" value="root"/>
-                <property name="password" value="root"/>
-            </dataSource>
-        </environment>
-    </environments>
-
-    <mappers>
-        <mapper resource="com/xxy/mapper/AdminMapper.xml"/>
-    </mappers>
+    <settings>
+        <setting name="logImpl" value="LOG4J" />
+    </settings>
+    <!--spring 接管其他的工作 数据源  映射文件注册 插件-->
 </configuration>

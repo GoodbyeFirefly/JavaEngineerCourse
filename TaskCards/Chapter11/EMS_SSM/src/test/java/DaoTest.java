@@ -1,4 +1,5 @@
 import com.xxy.mapper.AdminMapper;
+import com.xxy.service.AdminService;
 import com.xxy.util.MybatisUtil;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -22,6 +23,13 @@ public class DaoTest {
         SqlSession sqlSession = MybatisUtil.getSqlSession();
         AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
         adminMapper.updateLoginTime("admin", new Date(), "127.0.0.1");
+        sqlSession.commit();
         sqlSession.close();
+    }
+
+    @Test
+    public void AdminLoginUpdateServiceTest() {
+        AdminService.updateLoginTime("admin", new Date(), "127.0.0.2");
+
     }
 }

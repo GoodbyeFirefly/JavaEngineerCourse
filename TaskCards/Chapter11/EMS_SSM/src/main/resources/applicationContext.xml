@@ -2,13 +2,61 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/beans/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--spring的配置文件:除了控制器之外的bean对象都在这里扫描-->
-    <!--不配置的话，spring的自动注入功能将无法使用-->
-    <context:component-scan base-package="com.xxy.pojo,com.xxy.service"/>
+    <!--这些包中添加注解之后对象的创建权限就交给spring容器-->
+    <context:component-scan base-package="com.xxy.mapper,com.xxy.service"/>
 
+    <!--spring整合mybatis -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" 	class="com.alibaba.druid.pool.DruidDataSource">
+        <!--可以根据url自动检查出驱动-->
+        <!--<property name="driverClassName" value="${jdbc.driver}"></property>-->
+        <property name="url" value="${jdbc.url}"></property>
+        <property name="username" value="${jdbc.username}"></property>
+        <property name="password" value="${jdbc.password}"></property>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--如果有mybatis的单独的配置文件，需要在此引入 -->
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <!--配置别名-->
+        <!--<property name="typeAliasesPackage" value="com.xxy.pojo"/>-->
+        <!--映射文件-->
+        <!--<property name="mapperLocations" value="com/kkb/mapper/*.xml"/>-->
+        <!--插件-->
+        <property name="plugins">
+            <array>
+                <!--分页-->
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <!--产生接口的动态代理类-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xxy.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!--property name为sqlSessionFactory不建议使用，可能在spring后续版本中被淘汰-->
+    </bean>
+
+    <!-- 通过注解方式实现事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 </beans>
