@@ -1,8 +1,6 @@
 package com.xxy.service;
 
 import com.xxy.mapper.AdminMapper;
-import com.xxy.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

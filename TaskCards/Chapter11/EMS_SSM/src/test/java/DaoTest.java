@@ -1,7 +1,5 @@
 import com.xxy.mapper.AdminMapper;
 import com.xxy.service.AdminService;
-import com.xxy.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
