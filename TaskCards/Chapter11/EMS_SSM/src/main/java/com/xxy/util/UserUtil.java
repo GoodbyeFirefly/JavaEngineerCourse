@@ -1,6 +1,6 @@
 package com.xxy.util;
 
-import com.xxy.bean.User;
+import com.xxy.pojo.User;
 
 import javax.servlet.http.HttpSession;
 

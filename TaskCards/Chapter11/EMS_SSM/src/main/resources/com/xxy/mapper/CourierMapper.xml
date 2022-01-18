@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace="名称必须与映射的接口的名字一致，是完全限定名"-->
+<mapper namespace="com.xxy.mapper.CourierMapper">
+    <select id="findAll" resultType="com.xxy.pojo.Courier">
+        SELECT * FROM ECOURIER
+    </select>
+    <select id="findAllByLimit" resultType="com.xxy.pojo.Courier">
+        SELECT * FROM ECOURIER LIMIT #{offset},#{pagenumber}
+    </select>
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(NUMBER) total FROM ECOURIER
+    </select>
+    <insert id="insert">
+        INSERT INTO ECOURIER (COURIERNAME,COURIERPHONE,IDCARD,PASSWORD,COUNT,REGISTERTIME,LOGINTIME) VALUES(#{couriername},#{courierphone},#{idcard},#{password},0,NOW(),NOW())
+    </insert>
+    <select id="findByPhone" resultType="com.xxy.pojo.Courier">
+        SELECT * FROM ECOURIER WHERE COURIERPHONE=#{courierphone}
+    </select>
+    <update id="update">
+        UPDATE ECOURIER SET COURIERNAME=#{couriername},COURIERPHONE=#{courierphone},IDCARD=#{idcard},PASSWORD=#{password} WHERE NUMBER=#{number}
+    </update>
+    <delete id="delete">
+        DELETE FROM ECOURIER WHERE NUMBER=#{number}
+    </delete>
+    <select id="getCourierDay">
+        SELECT COUNT((TO_DAYS(REGISTERTIME)=TO_DAYS(NOW())) OR NULL) FROM ECOURIER
+    </select>
+
+</mapper>

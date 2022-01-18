@@ -1,39 +1,50 @@
 package com.xxy.service;
 
-import com.xxy.bean.Courier;
-import com.xxy.dao.BaseCourierDao;
-import com.xxy.dao.impl.CourierDaoMysql;
+import com.xxy.mapper.CourierMapper;
+import com.xxy.pojo.Courier;
 
+
+import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CourierService {
-    private static BaseCourierDao dao = new CourierDaoMysql();
-    public static List<Courier> findall(boolean limit, int offset, int pageNumber) {
-        return dao.findall(limit, offset, pageNumber);
+    @Resource
+    private CourierMapper courierMapper;
+
+    public List<Courier> findall(boolean limit, int offset, int pageNumber) {
+        if (limit) {
+            return courierMapper.findAllByLimit(offset, pageNumber);
+        } else {
+            return courierMapper.findAll();
+        }
     }
 
-    public static int gettotal() {
-        return dao.gettotal();
+    public int gettotal() {
+        return courierMapper.getTotal();
     }
 
-    public static Boolean insert(Courier courier) {
-        return dao.insert(courier);
+    public Boolean insert(Courier courier) {
+        return courierMapper.insert(courier);
     }
 
-    public static Courier findByPhone(String courierphone) {
-        return dao.findByPhone(courierphone);
+    public Courier findByPhone(String courierphone) {
+        return courierMapper.findByPhone(courierphone);
     }
 
-    public static Boolean update(Courier courier) {
-        return dao.update(courier);
+    public Boolean update(Courier courier) {
+        return courierMapper.update(courier);
     }
 
-    public static Boolean delete(String number) {
-        return dao.delete(number);
+    public Boolean delete(String number) {
+        return courierMapper.delete(number);
     }
 
-    public static Map<String, Integer> console() {
-        return dao.console();
+    public Map<String, Integer> console() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("courier_size", courierMapper.getTotal());
+        map.put("courier_day", courierMapper.getCourierDay());
+        return map;
     }
 }
