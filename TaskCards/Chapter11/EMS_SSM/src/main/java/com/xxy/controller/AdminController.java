@@ -9,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Controller
 @RequestMapping("admin")
 public class AdminController {
+    @Resource
+    private AdminService adminService;
+
 
     @RequestMapping("login")
     @ResponseBody
@@ -22,14 +26,14 @@ public class AdminController {
                         @RequestParam("password") String password,
                         HttpServletRequest req) {
         // 调用service传递参数，并获取结果
-        boolean result = AdminService.login(username, password);
+        boolean result = adminService.login(username, password);
         // 根据结果准备不同的返回数据
         Message msg = null;
         if (result) {
             msg = new Message(0, "登录成功");
             Date date = new Date();
             String ip = req.getRemoteAddr();
-            AdminService.updateLoginTime(username, date, ip);
+            adminService.updateLoginTime(username, date, ip);
             req.getSession().setAttribute("adminUsername", "username");
         } else {
             msg = new Message(-1, "登录失败");

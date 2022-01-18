@@ -26,11 +26,9 @@ public class DaoTest {
 
     @Test
     public void AdminLoginUpdateTest() {
-        SqlSession sqlSession = MybatisUtil.getSqlSession();
-        AdminMapper adminMapper = sqlSession.getMapper(AdminMapper.class);
-        adminMapper.updateLoginTime("admin", new Date(), "127.0.0.1");
-        sqlSession.commit();
-        sqlSession.close();
+
+        adminMapper.updateLoginTime("admin", new Date(), "127.0.0.3");
+
     }
 
     @Test
