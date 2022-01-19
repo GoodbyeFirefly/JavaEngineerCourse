@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xxy.mapper.ExpressMapper">
+    <select id="console" resultType="int">
+        SELECT COUNT(ID) data1_size, COUNT(TO_DAYS(INTIME)=TO_DAYS(NOW()) OR NULL) data1_day, COUNT(STATUS=0 OR NULL) data2_size, COUNT(TO_DAYS(INTIME)=TO_DAYS(NOW()) AND STATUS=0 OR NULL) data2_day FROM EXPRESS
+    </select>
+    <select id="findByLimit" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS LIMIT #{offset},#{pagenumber}
+    </select>
+    <select id="findAll" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS
+    </select>
+    <select id="findByNumber" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS WHERE NUMBER=#{number}
+    </select>
+    <select id="findByCode" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS WHERE CODE=#{code}
+    </select>
+    <select id="findByUserPhone" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS WHERE USERPHONE=#{userphone}
+    </select>
+    <select id="findBySysPhone" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS WHERE SYSPHONE=#{sysphone}
+    </select>
+    <insert id="insert">
+        INSERT INTO EXPRESS (NUMBER,USERNAME,USERPHONE,COMPANY,CODE,INTIME,STATUS,SYSPHONE) VALUES(#{number},#{username},#{userphone},#{company},#{code},NOW(),0,#{sysPhone})
+    </insert>
+    <update id="update">
+        UPDATE EXPRESS SET NUMBER=#{number},USERNAME=#{username},USERPHONE=#{userphone},COMPANY=#{company},STATUS=#{status} WHERE ID=#{id}
+    </update>
+    <update id="updateStatus">
+        UPDATE EXPRESS SET STATUS=1,OUTTIME=NOW(),CODE=NULL WHERE CODE=#{code}
+    </update>
+    <select id="findByUserPhoneAndStatus" resultType="com.xxy.pojo.Express">
+        SELECT * FROM EXPRESS WHERE USERPHONE=#{userphone} AND STATUS=#{status}
+    </select>
+    <select id="getTotalRank" resultType="hashMap">
+        SELECT USERNAME,COUNT(NUMBER) AS score FROM EXPRESS GROUP BY USERNAME ORDER BY score DESC LIMIT #{offset},#{pagenumber}
+    </select>
+    <select id="getYearRank" resultType="hashMap">
+        SELECT USERNAME,COUNT(NUMBER) AS score FROM EXPRESS WHERE (YEAR(INTIME)=YEAR(NOW()) OR NULL) GROUP BY USERNAME ORDER BY score DESC LIMIT #{offset},#{pagenumber}
+    </select>
+    <select id="getMonthRank" resultType="hashMap">
+        SELECT USERNAME,COUNT(NUMBER) AS score FROM EXPRESS WHERE (MONTH(INTIME)=MONTH(NOW()) OR NULL) GROUP BY USERNAME ORDER BY score DESC LIMIT #{offset},#{pagenumber}
+    </select>
+
+
+</mapper>

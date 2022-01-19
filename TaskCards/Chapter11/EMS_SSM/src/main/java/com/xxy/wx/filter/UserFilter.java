@@ -1,6 +1,6 @@
 package com.xxy.wx.filter;
 
-import com.xxy.bean.User;
+//import com.xxy.bean.User;
 import com.xxy.util.UserUtil;
 
 import javax.servlet.*;
@@ -16,12 +16,12 @@ public class UserFilter implements Filter {
     }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        HttpSession session = ((HttpServletRequest) req).getSession();
-        User wxUser = UserUtil.getWxUser(session);
-        if (wxUser != null)
-            chain.doFilter(req, resp);
-        else
-            ((HttpServletResponse) resp).sendRedirect("login.html");
+//        HttpSession session = ((HttpServletRequest) req).getSession();
+//        User wxUser = UserUtil.getWxUser(session);
+//        if (wxUser != null)
+//            chain.doFilter(req, resp);
+//        else
+//            ((HttpServletResponse) resp).sendRedirect("login.html");
     }
 
     public void init(FilterConfig config) throws ServletException {
