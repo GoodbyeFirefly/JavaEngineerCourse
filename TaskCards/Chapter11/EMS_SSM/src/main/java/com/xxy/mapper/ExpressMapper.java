@@ -4,7 +4,6 @@ import com.xxy.exception.DuplicateCodeException;
 import com.xxy.pojo.Express;
 import org.apache.ibatis.annotations.Param;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

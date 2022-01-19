@@ -40,6 +40,20 @@ public class User {
         this.logintime = logintime;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "number=" + number +
+                ", username='" + username + '\'' +
+                ", userphone='" + userphone + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", password='" + password + '\'' +
+                ", registertime=" + registertime +
+                ", logintime=" + logintime +
+                ", isUser=" + isUser +
+                '}';
+    }
+
     public String getIdcard() {
         return idcard;
     }

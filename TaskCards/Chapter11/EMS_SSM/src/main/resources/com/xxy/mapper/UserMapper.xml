@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xxy.mapper.UserMapper">
+    <select id="findAll" resultType="com.xxy.pojo.User">
+        SELECT * FROM EUSER
+    </select>
+    <select id="findByLimit" resultType="com.xxy.pojo.User">
+        SELECT * FROM EUSER LIMIT #{offset},#{pagenumber}
+    </select>
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(NUMBER) total FROM EUSER
+    </select>
+    <insert id="insert">
+        INSERT INTO EUSER (USERNAME,USERPHONE,IDCARD,PASSWORD,REGISTERTIME,LOGINTIME) VALUES(#{username},#{userphone},#{idcard},#{password},NOW(),NOW())
+    </insert>
+    <select id="findByPhone" resultType="com.xxy.pojo.User">
+        SELECT * FROM EUSER WHERE USERPHONE=#{userphone}
+    </select>
+    <update id="update">
+        UPDATE EUSER SET USERNAME=#{username},USERPHONE=#{userphone},IDCARD=#{idcard},PASSWORD=#{password} WHERE NUMBER=#{number}
+    </update>
+    <delete id="delete">
+        DELETE FROM EUSER WHERE NUMBER=#{number}
+    </delete>
+    <select id="console" resultType="hashMap">
+        SELECT COUNT(NUMBER) user_size, COUNT((TO_DAYS(REGISTERTIME)=TO_DAYS(NOW())) OR NULL) user_day FROM EUSER
+    </select>
+
+</mapper>

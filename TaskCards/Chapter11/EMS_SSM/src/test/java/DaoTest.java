@@ -2,8 +2,10 @@ import com.xxy.exception.DuplicateCodeException;
 import com.xxy.mapper.AdminMapper;
 import com.xxy.mapper.CourierMapper;
 import com.xxy.mapper.ExpressMapper;
+import com.xxy.mapper.UserMapper;
 import com.xxy.pojo.Courier;
 import com.xxy.pojo.Express;
+import com.xxy.pojo.User;
 import com.xxy.service.AdminService;
 import org.apache.ibatis.annotations.Param;
 import org.junit.Test;
@@ -26,7 +28,52 @@ public class DaoTest {
     private CourierMapper courierMapper;
     @Resource
     private ExpressMapper expressMapper;
+    @Resource
+    private UserMapper userMapper;
 
+    /**
+     * UserMapperTest
+     */
+    @Test
+    public void findAllUser() {
+        List<User> users = userMapper.findAll();
+        for (User u : users) System.out.println(u);
+    }
+    @Test
+    public void findByLimitUser() {
+        List<User> users = userMapper.findByLimit(0, 5);
+        for (User u : users) System.out.println(u);
+    }
+    @Test
+    public void getTotalUser() {
+        int total = userMapper.getTotal();
+        System.out.println(total);
+    }
+    @Test
+    public void insertUser() {
+        User user = new User("申鹤", "18856361234", "411328199009091234", "123");
+        Boolean total = userMapper.insert(user);
+    }
+    @Test
+    public void findByPhoneUser() {
+        User user = userMapper.findByPhone("18856361234");
+        System.out.println(user);
+    }
+    @Test
+    public void updateUser() {
+        User user = new User("申鹤-小姨", "18856361234", "411328199009091234", "123");
+        user.setNumber(19);
+        userMapper.update(user);
+    }
+    @Test
+    public void deleteUser() {
+        userMapper.delete("19");
+    }
+    @Test
+    public void consoleUser() {
+        Map<String, Integer> console = userMapper.console();
+        System.out.println(console.keySet());
+    }
 
     /**
      * ExpressMapperTest
