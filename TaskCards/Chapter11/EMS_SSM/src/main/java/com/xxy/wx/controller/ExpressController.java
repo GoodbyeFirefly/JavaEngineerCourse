@@ -10,7 +10,6 @@ package com.xxy.wx.controller;
 //import com.xxy.util.DateFormatUtil;
 //import com.xxy.util.JSONUtil;
 import com.xxy.util.UserUtil;
-import sun.plugin2.message.JavaScriptBaseMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

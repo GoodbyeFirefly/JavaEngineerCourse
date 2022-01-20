@@ -5,6 +5,7 @@ import com.xxy.exception.DuplicateCodeException;
 import com.xxy.mapper.ExpressMapper;
 import com.xxy.util.RandomUtil;
 import com.xxy.util.SMSUtil;
+import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Controller
 public class ExpressService {
     @Resource
     private ExpressMapper expressMapper;

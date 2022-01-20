@@ -1,41 +1,49 @@
 package com.xxy.service;
 
-//import com.xxy.bean.User;
-//import com.xxy.dao.BaseUserDao;
-//import com.xxy.dao.impl.UserDaoMysql;
+import com.xxy.mapper.UserMapper;
+import com.xxy.pojo.User;
+import org.springframework.stereotype.Controller;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Controller
 public class UserService {
-//    private static BaseUserDao dao = new UserDaoMysql();
-//    public static List<User> findAll(boolean limit, int offset, int pageNumber) {
-//        return dao.findAll(limit, offset, pageNumber);
-//    }
-//
-//    public static int getTotal() {
-//        return dao.getTotal();
-//    }
-//
-//    public static Boolean insert(User user) {
-//        return dao.insert(user);
-//    }
-//
-//    public static User findByPhone(String userphone) {
-//        return dao.findByPhone(userphone);
-//    }
-//
-//    public static Boolean update(User user) {
-//        return dao.update(user);
-//    }
-//
-//    public static Boolean delete(String number) {
-//        return dao.delete(number);
-//    }
-//
-//    public static Map<String, Integer> console() {
-//        return dao.console();
-//    }
+    @Resource
+    private UserMapper userMapper;
+
+    public List<User> findAll(boolean limit, int offset, int pageNumber) {
+        if (limit) {
+            return userMapper.findByLimit(offset, pageNumber);
+        } else {
+            return userMapper.findAll();
+        }
+    }
+
+    public int getTotal() {
+        return userMapper.getTotal();
+    }
+
+    public Boolean insert(User user) {
+        return userMapper.insert(user);
+    }
+
+    public User findByPhone(String userphone) {
+        return userMapper.findByPhone(userphone);
+    }
+
+    public Boolean update(User user) {
+        return userMapper.update(user);
+    }
+
+    public Boolean delete(String number) {
+        return userMapper.delete(number);
+    }
+
+    public Map<String, Integer> console() {
+        return userMapper.console();
+    }
 
 }
