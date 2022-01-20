@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,7 @@ import java.util.List;
 public class CourierController {
     @Resource
     private CourierService courierService;
+    private Courier courier;
 
     @ResponseBody
     @RequestMapping("list.do")
@@ -69,7 +72,7 @@ public class CourierController {
     @RequestMapping("find.do")
     public String find(HttpServletRequest req, HttpServletResponse resp) {
         String courierphone = req.getParameter("courierphone");
-        Courier courier = courierService.findByPhone(courierphone);
+        courier = courierService.findByPhone(courierphone);
         Message msg = new Message();
         if (courier != null) {
             msg.setResult("查找成功");
@@ -85,12 +88,19 @@ public class CourierController {
     @ResponseBody
     @RequestMapping("update.do")
     public String update(HttpServletRequest req, HttpServletResponse resp) {
-        int number = Integer.parseInt(req.getParameter("number"));
+//        int number = Integer.parseInt(req.getParameter("number"));
+        System.out.println("------------old------------");
+        System.out.println(courier);
         String couriername = req.getParameter("couriername");
         String courierphone = req.getParameter("courierphone");
         String idcard = req.getParameter("idcard");
         String password = req.getParameter("password");
-        Courier courier = new Courier(number, couriername, courierphone, idcard, password);
+        courier.setCouriername(couriername);
+        courier.setCourierphone(courierphone);
+        courier.setIdcard(idcard);
+        courier.setPassword(password);
+        System.out.println("------------new------------");
+        System.out.println(courier);
         Boolean flag = courierService.update(courier);
         Message msg = new Message();
         if (flag) {

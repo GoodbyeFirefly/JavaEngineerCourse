@@ -198,7 +198,7 @@ public class DaoTest {
     }
     @Test
     public void update() {
-        Courier courier = new Courier(13, "申鹤-小姨", "18856601234", "411325199806061221", "123");
+        Courier courier = new Courier(15, "申鹤-小姨", "18856364322", "411325199806061221", "123");
         courierMapper.update(courier);
     }
     @Test

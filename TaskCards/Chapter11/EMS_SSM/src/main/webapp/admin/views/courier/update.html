@@ -94,7 +94,7 @@
             	layer.msg("密码不能为空");
             else {
 				var windowId = layer.load();
-				$.getJSON("/courier/update.do", {
+				$.post("/courier/update.do", {
 					number:number,
 					couriername:newCouriername,
 					courierphone:newCourierphone,
@@ -104,9 +104,10 @@
 					layer.close(windowId);
 					layer.msg(data.result);
 					if (data.status == 0) {
+						layer.msg(data.result);
 						$(".header:eq(1), .content:eq(1)").hide();
 					}
-				});
+				}, "json");
 			}
         });
 	</script>
