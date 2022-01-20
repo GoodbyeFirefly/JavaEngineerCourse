@@ -42,28 +42,28 @@
         <url-pattern>*.do</url-pattern>
     </servlet-mapping>
 
-    <!--注册字符集过滤器：post请求中文乱码问题的解决方案-->
-    <filter>
-        <filter-name>characterEncodingFilter</filter-name>
-        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-        <!--指定字符集-->
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-        <!--强制request使用字符集encoding-->
-        <init-param>
-            <param-name>forceRequestEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <!--强制response使用字符集encoding-->
-        <init-param>
-            <param-name>forceResponseEncoding</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--&lt;!&ndash;注册字符集过滤器：post请求中文乱码问题的解决方案&ndash;&gt;-->
+    <!--<filter>-->
+        <!--<filter-name>characterEncodingFilter</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>-->
+        <!--&lt;!&ndash;指定字符集&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>encoding</param-name>-->
+            <!--<param-value>UTF-8</param-value>-->
+        <!--</init-param>-->
+        <!--&lt;!&ndash;强制request使用字符集encoding&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>forceRequestEncoding</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--&lt;!&ndash;强制response使用字符集encoding&ndash;&gt;-->
+        <!--<init-param>-->
+            <!--<param-name>forceResponseEncoding</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>characterEncodingFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 </web-app>
