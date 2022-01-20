@@ -24,6 +24,7 @@ import java.util.Map;
 public class ExpressController {
     @Resource
     private ExpressService expressService;
+    private Express e;
 
     @ResponseBody
     @RequestMapping("console.do")
@@ -84,11 +85,11 @@ public class ExpressController {
         Message msg = new Message();
         if (flag) {
             msg.setStatus(0);
-            msg.setResult("录入成功！");
+            msg.setResult("录入成功");
         } else {
             // 录入失败只可能是快递单号number重复，与其他三个参数基本无关
             msg.setStatus(-1);
-            msg.setResult("录入失败！");
+            msg.setResult("录入失败");
         }
         String json = JsonUtil.toJson(msg);
         return json;
@@ -98,7 +99,7 @@ public class ExpressController {
     @RequestMapping("find.do")
     public String find(HttpServletRequest req, HttpServletResponse resp) {
         String number = req.getParameter("number");
-        Express e = expressService.findByNumber(number);
+        e = expressService.findByNumber(number);
         Message msg = new Message();
         if (e == null) {
             msg.setStatus(-1);
@@ -115,22 +116,22 @@ public class ExpressController {
     @ResponseBody
     @RequestMapping("update.do")
     public String update(HttpServletRequest req, HttpServletResponse resp) {
-        int id = Integer.parseInt(req.getParameter("id"));
         String number = req.getParameter("number");
         String company = req.getParameter("company");
         String username = req.getParameter("username");
         String userphone = req.getParameter("userphone");
         int status = Integer.parseInt(req.getParameter("status"));
+        String olePhone = e.getUserphone();
 
-        Express e = new Express();
-        e.setId(id);
+//        Express e = new Express();
         e.setNumber(number);
         e.setCompany(company);
         e.setUsername(username);
         e.setUserphone(userphone);
         e.setStatus(status);
-        boolean update = expressService.update(e);
+        boolean update = expressService.update(e, olePhone);
         Message msg = new Message();
+        msg.setStatus(0);
         if (update) {
             msg.setStatus(0);
             msg.setResult("修改成功");

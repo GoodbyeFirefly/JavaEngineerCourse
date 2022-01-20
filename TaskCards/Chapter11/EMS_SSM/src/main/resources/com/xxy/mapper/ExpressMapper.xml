@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xxy.mapper.ExpressMapper">
+    <delete id="delete">
+        DELETE FROM EXPRESS WHERE ID=#{id}
+    </delete>
     <select id="getTotal" resultType="int">
         SELECT COUNT(ID) total FROM EXPRESS
     </select>

@@ -123,9 +123,9 @@ public class ExpressService {
      * @param newExpress 新的快递对象（number，company,username,userPhone）
      * @return 修改的结果，true表示成功，false表示失败
      */
-    public boolean update(Express newExpress) {
+    public boolean update(Express newExpress, String oldPhone) {
         // 个人理解：当有修改收件人号码的需求时，由于涉及到重发短信的业务，需要重新执行插入（插入时，会向用户发送短信）
-        if (newExpress.getUserphone() != null) {
+        if (!newExpress.getUserphone().equals(oldPhone)) {
             expressMapper.delete(newExpress.getId());
             return insert(newExpress);
         } else {

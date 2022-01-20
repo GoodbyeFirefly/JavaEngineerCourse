@@ -87,47 +87,43 @@
 					})
 				}
 			});
+			$("#update").click(function () {
+				var number = $("input:eq(1)").val();
+				var company = $("input:eq(2)").val();
+				var username = $("input:eq(3)").val();
+				var userphone = $("input:eq(4)").val();
+				var status = $(".status:checked").val();
+				if (!number)
+					layer.msg("运单号不能为空");
+				else if (!number_regex.test(number))
+					layer.msg("请输入3-6位数字");
+				else if (!company)
+					layer.msg("公司名称不能为空");
+				else if (!username)
+					layer.msg("用户名不能为空");
+				else if (!userphone)
+					layer.msg("手机号不能为空");
+				else if (!phone_regex.test(userphone))
+					layer.msg("请输入正确的手机号码");
+				else {
+					var windowId = layer.load();
+					$.post("/express/update.do", {
+						number:number,
+						company:company,
+						username:username,
+						status:status,
+						userphone:userphone
+					}, function (data) {
+						layer.close(windowId);
+						layer.msg(data.result);
+						if (data.status == 0) {
+							$(".header:eq(1), .content:eq(1)").hide();
+						}
+					})
+				}
+			});
 		});
 
-		$("#update").click(function () {
-			var number = $("input:eq(1)").val();
-			var company = $("input:eq(2)").val();
-			var username = $("input:eq(3)").val();
-			var userphone = $("input:eq(4)").val();
-			var status = $(".status:checked").val();
-			if (!number)
-				layer.msg("运单号不能为空");
-			else if (!number_regex.test(number))
-				layer.msg("请输入3-6位数字");
-			else if (!company)
-				layer.msg("公司名称不能为空");
-			else if (!username)
-				layer.msg("用户名不能为空");
-			else if (!userphone)
-				layer.msg("手机号不能为空");
-			else if (!phone_regex.test(userphone))
-				layer.msg("请输入正确的手机号码");
-			else {
-				var windowId = layer.load();
-				var express = {
-					id:expressId,
-					number:number,
-					company:company,
-					username:username,
-					status:status
-				};
-				// 当需要修改电话号码时，再添加字段。后端检测到该字段不为空，则判定号码修改，调用重发短信服务
-				if (userphone != g_userPhone) {
-					express.userphone = userphone;
-				}
-				$.getJSON("/express/update.do", express, function (data) {
-					layer.close(windowId);
-					layer.msg(data.result);
-					if (data.status == 0) {
-						$(".header:eq(1), .content:eq(1)").hide();
-					}
-				})
-			}
-		});
+
 	</script>
 </html>
