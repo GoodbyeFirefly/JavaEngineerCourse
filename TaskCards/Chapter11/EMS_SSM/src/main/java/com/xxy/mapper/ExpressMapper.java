@@ -16,6 +16,8 @@ public interface ExpressMapper {
      */
     Map<String, Integer> console();
 
+    Integer getTotal();
+
 
     /**
      * 用于查询所有快递

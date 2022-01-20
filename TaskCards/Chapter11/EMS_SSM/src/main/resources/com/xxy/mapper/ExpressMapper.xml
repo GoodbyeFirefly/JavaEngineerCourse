@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.xxy.mapper.ExpressMapper">
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(ID) total FROM EXPRESS
+    </select>
     <select id="console" resultType="hashMap">
         SELECT COUNT(ID) data1_size, COUNT(TO_DAYS(INTIME)=TO_DAYS(NOW()) OR NULL) data1_day, COUNT(STATUS=0 OR NULL) data2_size, COUNT(TO_DAYS(INTIME)=TO_DAYS(NOW()) AND STATUS=0 OR NULL) data2_day FROM EXPRESS
     </select>

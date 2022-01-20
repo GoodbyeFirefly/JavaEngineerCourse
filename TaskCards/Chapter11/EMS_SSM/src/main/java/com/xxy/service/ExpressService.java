@@ -36,6 +36,10 @@ public class ExpressService {
         return data;
     }
 
+    public Integer getTotal() {
+        return expressMapper.getTotal();
+    }
+
     /**
      * 用于查询所有快递
      *
