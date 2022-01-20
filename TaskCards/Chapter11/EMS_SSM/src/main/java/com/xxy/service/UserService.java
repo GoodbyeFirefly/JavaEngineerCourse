@@ -3,13 +3,14 @@ package com.xxy.service;
 import com.xxy.mapper.UserMapper;
 import com.xxy.pojo.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Service
 public class UserService {
     @Resource
     private UserMapper userMapper;

@@ -85,7 +85,8 @@ public class DaoTest {
 //        Integer data2Size = expressMapper.getData2Size();
 //        Integer data2Day = expressMapper.getData2Day();
 //        System.out.println(data1Day + " " + data1Size + " " + data2Size + " " + data2Day);
-        List<Integer> console = expressMapper.console();
+        Map<String, Integer> console = expressMapper.console();
+        System.out.println(console.size());
     }
     @Test
     public void findAllExpress(){

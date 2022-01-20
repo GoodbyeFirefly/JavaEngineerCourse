@@ -2,7 +2,7 @@ package com.xxy.service;
 
 import com.xxy.mapper.CourierMapper;
 import com.xxy.pojo.Courier;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Service
 public class CourierService {
     @Resource
     private CourierMapper courierMapper;

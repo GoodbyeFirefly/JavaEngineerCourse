@@ -14,7 +14,7 @@ public interface ExpressMapper {
      * @return [{size:总数,day:新增},{size:总数,day:新增}]
      *
      */
-    List<Integer> console();
+    Map<String, Integer> console();
 
 
     /**

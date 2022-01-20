@@ -5,7 +5,7 @@ import com.xxy.exception.DuplicateCodeException;
 import com.xxy.mapper.ExpressMapper;
 import com.xxy.util.RandomUtil;
 import com.xxy.util.SMSUtil;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Service
 public class ExpressService {
     @Resource
     private ExpressMapper expressMapper;
@@ -26,11 +26,11 @@ public class ExpressService {
     public List<Map<String, Integer>> console() {
         List<Map<String, Integer>> data = new ArrayList<>();
         Map<String, Integer> data1 = new HashMap<>(), data2 = new HashMap<>();
-        List<Integer> console = expressMapper.console();
-        data1.put("data1_size", console.get(0));
-        data1.put("data1_day", console.get(1));
-        data2.put("data2_size", console.get(2));
-        data2.put("data2_day", console.get(3));
+        Map<String, Integer> console = expressMapper.console();
+        data1.put("data1_size", console.get("data1_size"));
+        data1.put("data1_day", console.get("data1_day"));
+        data2.put("data2_size", console.get("data2_size"));
+        data2.put("data2_day", console.get("data2_day"));
         data.add(data1);
         data.add(data2);
         return data;

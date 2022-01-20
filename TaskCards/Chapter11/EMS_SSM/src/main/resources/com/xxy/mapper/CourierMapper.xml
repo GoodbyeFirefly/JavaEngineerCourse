@@ -26,7 +26,7 @@
     <delete id="delete">
         DELETE FROM ECOURIER WHERE NUMBER=#{number}
     </delete>
-    <select id="getCourierDay">
+    <select id="getCourierDay" resultType="int">
         SELECT COUNT((TO_DAYS(REGISTERTIME)=TO_DAYS(NOW())) OR NULL) FROM ECOURIER
     </select>
 
