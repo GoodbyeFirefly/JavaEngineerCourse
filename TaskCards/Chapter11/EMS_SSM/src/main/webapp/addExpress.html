@@ -155,7 +155,7 @@
 		var userphone = $("#phone").val();
 		var company = $("#company option:selected").text();
 		// 这里使用layer相关方法时会出现一闪而过的情况，具体原因不明
-		$.get("/wx/insertExpress.do", {
+		$.post("/wx/insertExpress.do", {
 			number : number,
 			username : username,
 			userphone : userphone,
@@ -163,7 +163,7 @@
 		}, function (data) {
 			layer.close(windowId);
 			layer.msg(data.result);
-		});
+		}, "json");
 	}
 
 </script>
