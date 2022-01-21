@@ -164,12 +164,12 @@ public class ExpressService {
     }
 
     public Map<String, ArrayList<String>> getTotalRankData(int offset, int pageNum) {
-        ArrayList<Map<Object, Object>> totalRank = expressMapper.getTotalRank(offset, pageNum);
+        ArrayList<Map<String, String>> totalRank = expressMapper.getTotalRank(offset, pageNum);
         Map<String, ArrayList<String>> data = new HashMap<>();
         ArrayList<String> nameList = new ArrayList<>(), scoreList = new ArrayList<>();
-        for (Map<Object, Object> map : totalRank) {
-            nameList.add((String)map.get("USERNAME"));
-            scoreList.add((String)map.get("score"));
+        for (Map<String, String> map : totalRank) {
+            nameList.add(map.get("USERNAME"));
+            scoreList.add(map.get("score"));
         }
         data.put("nameListTotal", nameList);
         data.put("scoreListTotal", scoreList);
@@ -177,12 +177,12 @@ public class ExpressService {
     }
 
     public Map<String, ArrayList<String>> getYearRankData(int offset, int pageNum) {
-        ArrayList<Map<Object, Object>> yearRank = expressMapper.getYearRank(offset, pageNum);
+        ArrayList<Map<String, String>> yearRank = expressMapper.getYearRank(offset, pageNum);
         Map<String, ArrayList<String>> data = new HashMap<>();
         ArrayList<String> nameList = new ArrayList<>(), scoreList = new ArrayList<>();
-        for (Map<Object, Object> map : yearRank) {
-            nameList.add((String)map.get("USERNAME"));
-            scoreList.add((String)map.get("score"));
+        for (Map<String, String> map : yearRank) {
+            nameList.add(map.get("USERNAME"));
+            scoreList.add(map.get("score"));
         }
         data.put("nameListYear", nameList);
         data.put("scoreListYear", scoreList);
@@ -190,12 +190,12 @@ public class ExpressService {
     }
 
     public Map<String, ArrayList<String>> getMonthRankData(int offset, int pageNum) {
-        ArrayList<Map<Object, Object>> monthRank = expressMapper.getMonthRank(offset, pageNum);
+        ArrayList<Map<String, String>> monthRank = expressMapper.getMonthRank(offset, pageNum);
         Map<String, ArrayList<String>> data = new HashMap<>();
         ArrayList<String> nameList = new ArrayList<>(), scoreList = new ArrayList<>();
-        for (Map<Object, Object> map : monthRank) {
-            nameList.add((String)map.get("USERNAME"));
-            scoreList.add((String)map.get("score"));
+        for (Map<String, String> map : monthRank) {
+            nameList.add(map.get("USERNAME"));
+            scoreList.add(map.get("score"));
         }
         data.put("nameListMonth", nameList);
         data.put("scoreListMonth", scoreList);

@@ -8,6 +8,7 @@ public class SMSUtil {
         return true;
     }
 
+    // 这里是正常的流程，但是由于短信发送业务需要使用项目上线，这里简单代替一下
 //    public static boolean send(String phoneNumber,String code) {
 //        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4GJVun7NhPS8FMgSqqS4", "TgTLk8KVJjESFu6iC1jTHsVMK53z5Q");
 //        IAcsClient client = new DefaultAcsClient(profile);

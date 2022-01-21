@@ -92,9 +92,9 @@ public interface ExpressMapper {
      * @param pageNumber 分页查询：每页有几条数据
      * @return 返回map集合，包括nameListTotal、scoreListTotal
      */
-    ArrayList<Map<Object, Object>> getTotalRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
+    ArrayList<Map<String, String>> getTotalRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
 
-    ArrayList<Map<Object, Object>> getYearRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
+    ArrayList<Map<String, String>> getYearRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
 
-    ArrayList<Map<Object, Object>> getMonthRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
+    ArrayList<Map<String, String>> getMonthRank (@Param("offset") int offset, @Param("pagenumber") int pageNumber);
 }

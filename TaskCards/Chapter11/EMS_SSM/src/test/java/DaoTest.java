@@ -152,18 +152,18 @@ public class DaoTest {
     }
     @Test
     public void getTotalRankExpress() {
-        ArrayList<Map<Object, Object>> totalRankName = expressMapper.getTotalRank(0, 3);
-        for (Map<Object, Object> map : totalRankName) System.out.println(map);
+        ArrayList<Map<String, String>> totalRankName = expressMapper.getTotalRank(0, 3);
+        for (Map<String, String> map : totalRankName) System.out.println(map);
     }
     @Test
     public void getYearRankExpress() {
-        ArrayList<Map<Object, Object>> totalRankName = expressMapper.getYearRank(0, 3);
-        for (Map<Object, Object> map : totalRankName) System.out.println(map);
+        ArrayList<Map<String, String>> totalRankName = expressMapper.getYearRank(0, 3);
+        for (Map<String, String> map : totalRankName) System.out.println(map);
     }
     @Test
     public void getMonthRankExpress() {
-        ArrayList<Map<Object, Object>> totalRankName = expressMapper.getMonthRank(0, 3);
-        for (Map<Object, Object> map : totalRankName) System.out.println(map);
+        ArrayList<Map<String, String>> totalRankName = expressMapper.getMonthRank(0, 3);
+        for (Map<String, String> map : totalRankName) System.out.println(map);
     }
 
     /**
