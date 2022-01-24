@@ -20,6 +20,21 @@ public class Bill {
     @Column(name = "explain_")
     private String explain;
 
+    @Override
+    public String toString() {
+        return "Bill{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", billTime=" + billTime +
+                ", typeId=" + typeId +
+                ", price=" + price +
+                ", explain='" + explain + '\'' +
+                ", typeName='" + typeName + '\'' +
+                ", date1=" + date1 +
+                ", date2=" + date2 +
+                '}';
+    }
+
     // @Transient注解表示当前属性为瞬时属性，跟字段没有映射
     // 实体类中date1和date2只作为查询条件存在，跟表中的字段没有关联
     /**
