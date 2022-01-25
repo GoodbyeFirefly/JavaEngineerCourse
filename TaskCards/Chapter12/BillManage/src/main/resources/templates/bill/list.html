@@ -37,7 +37,7 @@
             &nbsp; &nbsp;
             <input type="reset" value="重置" class="btn btn-info" />
             &nbsp; &nbsp;
-            <a href="/bill/toAdd" th:href="@{/bill/toAdd}" class="btn btn-info">添加</a>
+            <a href="/bill/toAddPage" th:href="@{/bill/toAddPage}" class="btn btn-info">添加</a>
         </div>
     </form>
 </div>
@@ -66,6 +66,10 @@
             <td th:text="*{price}">price</td>
             <td th:text="*{typeName}">typename</td>
             <td th:text="*{explain}">explain</td>
+            <td>
+                <a th:href="|toUpdatePage/*{id}|">修改</a>
+                <a th:href="|delete/*{id}|">删除</a>
+            </td>
         </tr>
         </tbody>
     </table>

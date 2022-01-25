@@ -20,7 +20,7 @@ public class BillController {
     @Resource
     private TypeService typeService;
 
-    @RequestMapping("list.do")
+    @RequestMapping("list")
     public String list(Bill bill, Model model) {
         List<BillType> types = typeService.selectAll();
         model.addAttribute("types", types);

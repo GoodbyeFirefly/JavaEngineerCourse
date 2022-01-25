@@ -13,34 +13,40 @@
 <br/><br/>
 <div class="with:80%">
 	<!-- TODO  回显数据 --> 
-    <form class="form-horizontal" action="/bill/update" method="post">
+    <form class="form-horizontal" action="/bill/update.do" method="post" th:object="${bill}">
+        <!--注意这里要添加隐藏对象，用来标记修改对象的id-->
+        <input type="hidden" name="id" th:value="*{id}">
         <div class="form-group">
             <label for="typeId" class="col-sm-2 control-label">类型</label>
             <div class="col-sm-10">
+                <select name="typeId" id="typeId" class="form-control">
+                    <!-- TODO 回显账单类型 -->
+                    <option th:each="type: ${types}" th:value="${type.id}" th:text="${type.name}" th:selected="${type.id} + '' == *{typeId}"></option>
+                </select>
             </div>
         </div>
         <div class="form-group">
             <label for="title" class="col-sm-2 control-label" >标题</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="title" id="title" placeholder="标题"/>
+                <input type="text" th:value="*{title}" class="form-control" name="title" id="title" placeholder="标题"/>
             </div>
         </div>
         <div class="form-group">
             <label for="billTime" class="col-sm-2 control-label">日期</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="billTime"  id="billTime" placeholder="日期" onclick="WdatePicker()"/>
+                <input type="text" th:value="*{#dates.format(billTime, 'yyyy-MM-dd')}" class="form-control" name="billTime"  id="billTime" placeholder="日期" onclick="WdatePicker()"/>
             </div>
         </div>
         <div class="form-group">
             <label for="price" class="col-sm-2 control-label">金额</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="price"  id="price" placeholder="金额"/>
+                <input type="text" th:value="*{price}" class="form-control" name="price"  id="price" placeholder="金额"/>
             </div>
         </div>
         <div class="form-group">
             <label for="explain" class="col-sm-2 control-label">说明</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" name="explain" id="explain" placeholder="说明"/>
+                <input type="text" th:value="*{explain}" class="form-control" name="explain" id="explain" placeholder="说明"/>
             </div>
         </div>
 
