@@ -24,8 +24,8 @@ public class BillController {
     public String list(Bill bill, Model model) {
         List<BillType> types = typeService.selectAll();
         model.addAttribute("types", types);
-        List<Bill> list = billService.list(bill);
-        model.addAttribute("list", list);
+        List<Bill> bills = billService.list(bill);
+        model.addAttribute("bills", bills);
         model.addAttribute("bill", bill);
         return "/bill/list";
     }

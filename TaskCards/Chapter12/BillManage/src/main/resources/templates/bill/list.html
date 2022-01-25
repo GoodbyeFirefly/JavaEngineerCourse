@@ -58,6 +58,14 @@
         </thead>
         <tbody >
 		<!-- TODO 回显查询结果-->
+        <tr th:each="bill, status : ${bills}" th:object="${bill}">
+            <td th:text="${bill.id}">1</td>
+            <td th:text="*{title}">1</td>
+            <td th:text="*{billTime} ? ${#dates.format(bill.billTime, 'yyyy-MM-dd')}">time</td>
+            <td th:text="*{price}">price</td>
+            <td th:text="*{typeName}">typename</td>
+            <td th:text="*{explain}">explain</td>
+        </tr>
         </tbody>
     </table>
 </div>
