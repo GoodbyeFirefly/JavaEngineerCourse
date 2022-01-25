@@ -1,5 +1,7 @@
 package com.xxy.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xxy.entity.Bill;
 import com.xxy.mapper.BillMapper;
 import org.springframework.stereotype.Service;
@@ -30,5 +32,11 @@ public class BillService {
 
     public int delete(Long id) {
         return billMapper.deleteByPrimaryKey(id);
+    }
+
+    public PageInfo<Bill> listPage(Bill b, int pageNum, int pageSize) {
+        return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> {
+            billMapper.select(b);
+        });
     }
 }

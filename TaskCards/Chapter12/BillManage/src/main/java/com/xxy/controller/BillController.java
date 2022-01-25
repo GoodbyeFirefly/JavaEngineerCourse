@@ -1,5 +1,6 @@
 package com.xxy.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xxy.entity.Bill;
 import com.xxy.entity.BillType;
 import com.xxy.service.BillService;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -19,6 +21,18 @@ public class BillController {
     private BillService billService;
     @Resource
     private TypeService typeService;
+
+    public String listPage(@RequestParam(defaultValue = "1") int pageNum,
+                           @RequestParam(defaultValue = "10") int pageSize,
+                           Bill bill,
+                           Model model) {
+        List<BillType> types = typeService.selectAll();
+        model.addAttribute("types", types);
+
+        PageInfo<Bill> page = billService.listPage(bill, pageNum, pageSize);
+        model.addAttribute("page", page);
+        return "/bill/list-page";
+    }
 
     @RequestMapping("list")
     public String list(Bill bill, Model model) {
