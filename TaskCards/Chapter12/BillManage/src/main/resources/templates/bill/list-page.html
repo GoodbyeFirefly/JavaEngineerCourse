@@ -13,13 +13,16 @@
 <h1>账单列表</h1>
 <br/><br/>
 <div class="with:80%">
-    <form class="form-inline" id="qf"   th:action="@{/bill/list-page}"  method="post">
-		<!-- TODO 分页相关参数-->
+    <form class="form-inline" id="qf" th:action="@{/bill/list-page}" method="post">
+		<!-- 隐藏对象PageNum(当前页数)和PageSize(每页行数) -->
+        <input type="hidden" name="pageNum" id="pageNum" th:value="${page.pageNum}">
+        <input type="hidden" name="pageSize" id="pageSize" th:value="${page.pageSize}">
 
         <div class="form-group">
             <label for="typeId" class="control-label">类型</label>
             <select name="typeId" id="typeId" class="form-control">
                 <option value="">全部</option>
+                <option th:each="type: ${types}" th:value="${type.id}" th:text="${type.name}" th:selected="${type.id} + '' == ${#strings.trim(param.typeId)}"></option>
             </select>
         </div>
         <div class="form-group">
@@ -35,7 +38,7 @@
             &nbsp; &nbsp;
             <input type="reset" value="重置" class="btn btn-info" />
             &nbsp; &nbsp;
-            <a href="/bill/toAdd" th:href="@{/bill/toAdd}" class="btn btn-info">添加</a>
+            <a href="/bill/toAddPage" th:href="@{/bill/toAddPage}" class="btn btn-info">添加</a>
         </div>
     </form>
 </div>
@@ -55,14 +58,80 @@
         </tr>
         </thead>
         <tbody>
-		<!-- TODO 页面循环-->
+        <tr th:each="bill, status : ${page.list}" th:object="${bill}" th:style="${status.even} ? 'backgroundcolor: grey'">
+            <td th:text="${bill.id}">1</td>
+            <td th:text="*{title}">1</td>
+            <td th:text="*{billTime} ? ${#dates.format(bill.billTime, 'yyyy-MM-dd')}">time</td>
+            <td th:text="*{price}">price</td>
+            <td th:text="*{typeName}">typename</td>
+            <td th:text="*{explain}">explain</td>
+            <td>
+                <a th:href="|toUpdatePage/*{id}|">修改</a>
+                <a th:href="|delete/*{id}|">删除</a>
+            </td>
+        </tr>
+
         </tbody>
     </table>
 </div>
 
-<!-- TODO 分页工具类-->
+<!-- 分页工具类-->
+<ul class="pagination">
+    <li><button class="btn btn-default" id="first">第一页</button></li>
+    <li><button class="btn btn-default" id="prev">上一页</button></li>
+    <li th:each="p:${page.navigatepageNums}">
+        <button class="btn btn-default" id="pn" name="pn" th:text="${p}" th:disabled="(${p} == ${page.pageNum})"></button>
+    </li>
+    <li><button class="btn btn-default" id="next">下一页</button></li>
+    <li><button class="btn btn-default" id="last">最后页</button></li>
+</ul>
 
-<!-- TODO 分页的js代码-->
+
+<!-- 分页的js代码-->
+<script>
+    $(function () {
+        // 通过内联的js得到分页相关数据
+        var pageNum = [[${page.pageNum}]];// 当前页
+        var pageCount = [[${page.pages}]];
+        var hasNextPage = [[${page.hasNextPage}]];
+        var hasPreviousPage = [[${page.hasPreviousPage}]];
+
+        // 绑定按钮事件
+        $("#next").click(function () {
+            $("#pageNum").val(pageNum + 1);
+            $("#qf").submit();// 提交表单
+        });
+        $("#prev").click(function () {
+            $("#pageNum").val(pageNum - 1);
+            $("#qf").submit();// 提交表单
+        });
+        $("#first").click(function () {
+            $("#pageNum").val(1);
+            $("#qf").submit();// 提交表单
+        });
+        $("#last").click(function () {
+            $("#pageNum").val(pageCount);
+            $("#qf").submit();// 提交表单
+        });
+
+        // 点击页面跳转
+        $("button[name='pn']").click(function () {
+            $("#pageNum").val($(this).html());
+            $("#qf").submit();// 提交表单
+        });
+
+        // 控制按钮状态
+        if (!hasNextPage) {
+            $("#next").prop("disabled", true);
+            $("#last").prop("disabled", true);
+        }
+        if (!hasPreviousPage) {
+            $("#prev").prop("disabled", true);
+            $("#first").prop("disabled", true);
+        }
+        
+    });
+</script>
 
 </body>
 </html>

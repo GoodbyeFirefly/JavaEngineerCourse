@@ -22,8 +22,9 @@ public class BillController {
     @Resource
     private TypeService typeService;
 
+    @RequestMapping("list-page")
     public String listPage(@RequestParam(defaultValue = "1") int pageNum,
-                           @RequestParam(defaultValue = "10") int pageSize,
+                           @RequestParam(defaultValue = "3") int pageSize,
                            Bill bill,
                            Model model) {
         List<BillType> types = typeService.selectAll();
