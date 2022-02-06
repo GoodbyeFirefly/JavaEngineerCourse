@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.xxy.mapper")
+@MapperScan("com.xxy.dao")   // 搜索接口的代理对象
 public class MybatisPlusConfig {
 
     @Bean
