@@ -2,7 +2,7 @@ package com.xxy.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.xxy.domain.User;
-import com.xxy.service.UserService;
+import com.xxy.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +55,19 @@ public class UserController {
     @RequestMapping("delete/{id}")
     public String delete(@PathVariable("id") Integer id) {
         userService.delete(id);
+        return "redirect:/admin/user/page";
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping("delete")
+    public String batchDelete(@RequestParam("ids") Integer[] ids) {
+        for (Integer id : ids) {
+            userService.delete(id);
+        }
         return "redirect:/admin/user/page";
     }
 
