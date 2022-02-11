@@ -72,7 +72,7 @@
                 $(":checkbox[name='ids']").prop("checked", $(this).prop("checked"));
             });
             $("#btnDelete").click(function () {
-                if ($(":checkbox[name='ids']").length > 0) {
+                if ($(":checked[name='ids']").length > 0) {
                     $("#df").submit();
                 } else {
                     alert('请选择要删除的记录')
