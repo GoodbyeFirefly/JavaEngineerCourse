@@ -2,7 +2,7 @@ package com.xxy.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.xxy.domain.User;
-import com.xxy.service.impl.UserService;
+import com.xxy.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.jws.WebParam;
-
 @Controller
 @RequestMapping("admin/user")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @RequestMapping("page")
     public String page(User user,
