@@ -34,6 +34,126 @@ public class Route implements Serializable {
     @TableField(exist = false)
     private Seller seller;//所属商家 使用resultmap的assocation处理
 
+    public Integer getRid() {
+        return rid;
+    }
+
+    public void setRid(Integer rid) {
+        this.rid = rid;
+    }
+
+    public String getRname() {
+        return rname;
+    }
+
+    public void setRname(String rname) {
+        this.rname = rname;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public String getRouteIntroduce() {
+        return routeIntroduce;
+    }
+
+    public void setRouteIntroduce(String routeIntroduce) {
+        this.routeIntroduce = routeIntroduce;
+    }
+
+    public String getRflag() {
+        return rflag;
+    }
+
+    public void setRflag(String rflag) {
+        this.rflag = rflag;
+    }
+
+    public String getRdate() {
+        return rdate;
+    }
+
+    public void setRdate(String rdate) {
+        this.rdate = rdate;
+    }
+
+    public String getIsThemeTour() {
+        return isThemeTour;
+    }
+
+    public void setIsThemeTour(String isThemeTour) {
+        this.isThemeTour = isThemeTour;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
+    public String getRimage() {
+        return rimage;
+    }
+
+    public void setRimage(String rimage) {
+        this.rimage = rimage;
+    }
+
+    public Integer getSid() {
+        return sid;
+    }
+
+    public void setSid(Integer sid) {
+        this.sid = sid;
+    }
+
+    public String getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(String sourceId) {
+        this.sourceId = sourceId;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public List<RouteImg> getRouteImgList() {
+        return routeImgList;
+    }
+
+    public void setRouteImgList(List<RouteImg> routeImgList) {
+        this.routeImgList = routeImgList;
+    }
+
     @TableField(exist = false)
     private List<RouteImg> routeImgList;//商品详情图片列表,关联属性，mybatis plus不能查，需要配置resultmap使用resultmap的collection处理
 }
