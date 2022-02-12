@@ -15,7 +15,16 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public PageInfo<Route> findPage(Route conditioin, int pageNum, int pageSize) {
+        // 查询条件（input组件的value）为空时，默认的为''而不是null
+        // mp内置的条件查询会将''作为条件之一，从而导致查询不出结果
+        if (conditioin != null) {
+            if ("".equals(conditioin.getRname())) conditioin.setRname(null);
+            if ("".equals(conditioin.getRouteIntroduce())) conditioin.setRouteIntroduce(null);
+            if (conditioin.getCategory() != null && "".equals(conditioin.getCategory().getCname())) conditioin.setCategory(null);
+            if (conditioin.getSeller() != null && "".equals(conditioin.getSeller().getSname())) conditioin.setSeller(null);
+        }
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> {
+            // 需要将查询条件作为参数传入
             routeDao.find(conditioin);
         });
     }

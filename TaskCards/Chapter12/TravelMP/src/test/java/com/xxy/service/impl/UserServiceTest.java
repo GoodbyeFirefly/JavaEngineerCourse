@@ -22,6 +22,7 @@ public class UserServiceTest {
     @Test
     public void findPage() {
         User u = new User();
+        u.setName("申鹤");
         PageInfo<User> page = userService.findPage(u, 1, 10);
         page.getList().forEach(System.out :: println);
         System.out.println("总行数=" + page.getTotal());

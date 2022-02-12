@@ -18,8 +18,15 @@ public class SellerServiceImpl implements SellerService {
     private SellerDao sellerDao;
     @Override
     public PageInfo<Seller> findPage(Seller conditioin, int pageNum, int pageSize) {
+        // 查询条件（input组件的value）为空时，默认的为''而不是null
+        // mp内置的条件查询会将''作为条件之一，从而导致查询不出结果
+        if (conditioin != null) {
+            if ("".equals(conditioin.getSname())) conditioin.setSname(null);
+            if ("".equals(conditioin.getAddress())) conditioin.setAddress(null);
+        }
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> {
-            sellerDao.selectList(new QueryWrapper<Seller>());
+            // 需要将查询条件作为参数传入
+            sellerDao.selectList(new QueryWrapper<Seller>(conditioin));
         });
     }
 

@@ -17,8 +17,15 @@ public class UserServiceImpl implements com.xxy.service.UserService {
 
     @Override
     public PageInfo<User> findPage(User conditioin, int pageNum, int pageSize) {
+        // 查询条件（input组件的value）为空时，默认的为''而不是null
+        // mp内置的条件查询会将''作为条件之一，从而导致查询不出结果
+        if (conditioin != null) {
+            if ("".equals(conditioin.getName())) conditioin.setName(null);
+            if ("".equals(conditioin.getEmail())) conditioin.setEmail(null);
+        }
         return PageHelper.startPage(pageNum, pageSize).doSelectPageInfo(() -> {
-            userDao.selectList(Wrappers.<User>query());
+            // 需要将查询条件作为参数传入
+            userDao.selectList(Wrappers.<User>query(conditioin));
         });
     }
 

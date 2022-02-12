@@ -21,7 +21,9 @@ public class UserController {
                        @RequestParam(defaultValue = "1") int pageNum,
                        @RequestParam(defaultValue = "10") int pageSize,
                        Model model) {
+        System.out.println(user);
         PageInfo<User> page = userService.findPage(user, pageNum, pageSize);
+
         model.addAttribute("page", page);
         return "/user/list";
     }

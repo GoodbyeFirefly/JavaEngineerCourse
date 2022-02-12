@@ -91,7 +91,7 @@
                     <li>
                         <a href="#">用户</a>
                     </li>
-                    <li class="active">用户管理</li>
+                    <li class="active">旅游线路</li>
                 </ul><!-- /.breadcrumb -->
 
             </div>
@@ -120,6 +120,7 @@
                             <select class="form-control" id="cid" name="cid">
                                 <option value="">全部</option>
 								<!-- TODO 回显数据 -->
+                                <option th:each="category: ${categories}" th:value="${category.cid}" th:text="${category.cname}" th:selected="${category.cid} + '' == ${#strings.trim(param.cid)}"></option>
                             </select>
                         </div>
 
@@ -128,6 +129,7 @@
                             <select class="form-control" id="sid" name="sid">
                                 <option value="">全部</option>
 								<!-- TODO 回显数据 -->
+                                <option th:each="seller: ${sellers}" th:value="${seller.sid}" th:text="${seller.sname}" th:selected="${seller.sid} + '' == ${#strings.trim(param.sid)}"></option>
                             </select>
                         </div>
 
@@ -216,7 +218,7 @@
                             </li>
 
                             <span style="font-size: 20px;margin-left: 5px;"
-                                  th:text="|共条 ${page.total} 记录，共${page.pages}页， 每页行数|">
+                                  th:text="|共${page.total}条记录，共${page.pages}页，每页行数|">
                                             </span>
                             <select id="setRows">
                                 <option value="5" th:selected="5 == ${page.pageSize}">5</option>
@@ -229,7 +231,64 @@
                     </nav>
                 </div>
 					<!-- TODO 分页js -->
-				
+                <script th:inline="javascript">
+                    //得到初始化变量
+                    var pageNum = [[${page.pageNum}]]; //当前
+                    var pages =[[${page.pages}]]; //总页数
+                    var hasNextPage = [[${page.hasNextPage}]];//true：还有下一页
+                    var hasPreviousPage =[[${page.hasPreviousPage}]]; //还有上一页
+                    // 判断按钮状态
+                    if (!hasPreviousPage) {
+                        $("#prev").addClass("disabled");
+                        $("#first").addClass("disabled");
+                    }
+                    if (!hasNextPage) {
+                        $("#next").addClass("disabled");
+                        $("#last").addClass("disabled");
+                    }
+
+                    // 按钮的监听事件
+                    $("#first").click(function() {
+                        if (!$("#first").hasClass("disabled")) {
+                            $("#pageNum").val(1);
+                            $("#qf").submit();
+                        }
+                    });
+                    $("#prev").click(function() {
+                        if (!$("#prev").hasClass("disabled")) {
+                            $("#pageNum").val(pageNum - 1);
+                            $("#qf").submit();
+                        }
+                    });
+                    $("#next").click(function() {
+                        if (!$("#next").hasClass("disabled")) {
+                            $("#pageNum").val(pageNum + 1);
+                            $("#qf").submit();
+                        }
+                    });
+                    $("#last").click(function() {
+                        if (!$("#last").hasClass("disabled")) {
+                            $("#pageNum").val(pages);
+                            $("#qf").submit();
+                        }
+                    });
+
+                    //页码分页
+                    $("li[name='pageNum']").click(function(){
+                        if (!$(this).hasClass("active")) {
+                            $("#pageNum").val($(this).children("a").html());
+                            $("#qf").submit();
+                        }
+                    });
+
+                    //设置每页行数
+                    $("#setRows").change(function(){
+                        $("#pageSize").val($(this).val());
+                        $("#pageNum").val(1);
+                        $("#qf").submit();
+                    });
+
+                </script>
 	
             </div><!-- /.page-content -->
         </div>
