@@ -65,7 +65,6 @@
     <script src="/assets/js/ace-elements.min.js"></script>
     <script src="/assets/js/ace.min.js"></script>
 
-	<!-- TODO 页面删除js -->
     <script>
         $(function () {
             $("#checkAll").click(function () {
@@ -116,72 +115,65 @@
             <div class="page-content">
 
                 <div style="float: left; padding: 10px;">
-                    <form class="form-inline" id="qf" action="/admin/user/page" method="post">
-						<!-- TODO 回显数据 -->
-                        <input type="hidden" name="pageNum" id="pageNum">
-                        <input type="hidden" name="pageSize" id="pageSize">
+                    <form class="form-inline" id="qf" action="/admin/seller/page" method="post">
+                        <input type="hidden" name="pageNum" th:value="${page.pageNum}" id="pageNum">
+                        <input type="hidden" name="pageSize" th:value="${page.pageSize}" id="pageSize">
 
                         <div class="form-group">
-                            <label for="name">姓名</label>
-                            <input type="text" name="name" class="form-control" id="name" th:value="${param.name}">
+                            <label for="sname">商家名称</label>
+                            <input type="text" name="sname" class="form-control" id="sname" th:value="${param.sname}">
                         </div>
 
                         <div class="form-group">
-                            <label for="email">邮箱</label>
-                            <input type="text" name="email" class="form-control" id="email" th:value="${param.email}">
+                            <label for="address">商家地址</label>
+                            <input type="text" name="address" class="form-control" id="address"
+                                   th:value="${param.address}">
                         </div>
                         <button type="submit" class="btn btn-sm btn-default">查询</button>
                         <button type="button" class="btn btn-sm btn-default"
-                                onclick="location.href='/admin/user/toadd'">添加
+                                onclick="location.href='/admin/seller/toadd'">添加
                         </button>
                         <button type="button" class="btn btn-sm btn-default" id="btnDelete">删除 </button>
                     </form>
                 </div>
 
-
-				<!--TODO 删除表单-->
                 <form action="/admin/user/delete" method="post" id="df">
                 <table id="simple-table" class="table  table-bordered table-hover">
                     <thead>
                     <tr>
                         <th><input type="checkbox" id="checkAll"></th>
                         <th>编号</th>
-                        <th>姓名</th>
-                        <th>性别</th>
-                        <th>出生日期</th>
-                        <th>电话</th>
-                        <th>邮箱</th>
+                        <th>商家名称</th>
+                        <th>商家电话</th>
+                        <th>商家地址</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-					
+
 					<!-- TODO 回显数据 -->
-                    <tr th:each="u, status : ${page.list}" th:style="${status.even} ? 'background-color: grey'">
-                        <td><input type="checkbox" name="ids" th:value="${u.uid}"></td>
-                        <td th:text="${u.uid}"></td>
-                        <td th:text="${u.name}"></td>
-                        <td th:text="${u.sex}"></td>
-                        <td th:text="${#dates.format(u.birthday, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${u.telephone}"></td>
-                        <td th:text="${u.email}"></td>
+                    <tr th:each="seller, status : ${page.list}" th:style="${status.even} ? 'background-color: grey'">
+                        <td><input type="checkbox" name="ids" th:value="${seller.sid}"></td>
+                        <td th:text="${seller.sid}"></td>
+                        <td th:text="${seller.sname}"></td>
+                        <td th:text="${seller.consphone}"></td>
+                        <td th:text="${seller.address}"></td>
                         <td>
                             <div class="hidden-sm hidden-xs btn-group">
-                                <a class="btn btn-xs btn-info" th:href="|/admin/user/toupdate/${u.uid}|" >
+                                <a class="btn btn-xs btn-info" th:href="|/admin/seller/toupdate/${seller.sid}|" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
-                                <a class="btn btn-xs btn-info" th:href="|/admin/user/delete/${u.uid}|">
+                                <a class="btn btn-xs btn-info" th:href="|/admin/seller/delete/${seller.sid}|">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                 </a>
                             </div>
                         </td>
                     </tr>
-
-
+	
                     </tbody>
                 </table>
                 </form>
-				<!-- TODO 回显数据 -->
+
                 <div>
                     <nav aria-label="Page navigation">
                         <ul class="pagination">
@@ -195,7 +187,7 @@
                                     <span aria-hidden="true">上一页</span>
                                 </a>
                             </li>
-                            <li name="pageNum" th:each="i : ${page.navigatepageNums}" th:class="${i == page.pageNum} ? 'active'">
+                            <li name="pageNum" th:each="i : ${page.navigatepageNums}" th:class="${i} == ${page.pageNum} ? 'active'">
                                 <a href="javascript:void(0);" th:text="${i}"></a>
                             </li>
 
@@ -215,16 +207,17 @@
                                   th:text="|共${page.total}条记录，共${page.pages}页，每页行数|">
                                             </span>
                             <select id="setRows">
-                                <option value="5" th:selected="${5 == page.pageSize}">5</option>
-                                <option value="10" th:selected="${10 == page.pageSize}">10</option>
-                                <option value="20" th:selected="${20 == page.pageSize}">20</option>
-                                <option value="30" th:selected="${30 == page.pageSize}">30</option>
+                                <option value="5" th:selected="5 == ${page.pageSize}">5</option>
+                                <option value="10" th:selected="10 == ${page.pageSize}">10</option>
+                                <option value="20" th:selected="20 == ${page.pageSize}">20</option>
+                                <option value="30" th:selected="30 == ${page.pageSize}">30</option>
                             </select>
 
                         </ul>
                     </nav>
                 </div>
-				<!-- TODO 分页JS -->
+
+					<!-- TODO 分页 -->
                 <script th:inline="javascript">
                     //得到初始化变量
                     var pageNum = [[${page.pageNum}]]; //当前

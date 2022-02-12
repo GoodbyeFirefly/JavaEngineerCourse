@@ -7,6 +7,7 @@ import com.xxy.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,33 +27,46 @@ public class SellerController {
         return "seller/list";
     }
 
-    @RequestMapping("/toadd")
+    @RequestMapping("toadd")
     public String toAdd() {
         return "seller/add";
     }
 
-    @RequestMapping("/doadd")
+    @RequestMapping("doadd")
     public String doAdd(Seller seller) {
         sellerService.add(seller);
         return "redirect:/admin/seller/page";
     }
 
-    @RequestMapping("toupdate")
-    public String toUpdate(Integer id, Model model) {
+    @RequestMapping("toupdate/{id}")
+    public String toUpdate(@PathVariable("id") Integer id, Model model) {
         Seller seller = sellerService.findById(id);
         model.addAttribute("seller", seller);
         return "seller/update";
     }
 
-    @RequestMapping("/doupdate")
+    @RequestMapping("doupdate")
     public String doUpdate(Seller seller) {
         sellerService.update(seller);
         return "redirect:/admin/seller/page";
     }
 
-    @RequestMapping("/delete")
-    public String delete(Integer id) {
+    @RequestMapping("delete/{id}")
+    public String delete(@PathVariable("id") Integer id) {
         sellerService.delete(id);
+        return "redirect:/admin/seller/page";
+    }
+
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping("delete")
+    public String batchDelete(@RequestParam("ids") Integer[] ids) {
+        for (Integer id : ids) {
+            sellerService.delete(id);
+        }
         return "redirect:/admin/seller/page";
     }
 }
