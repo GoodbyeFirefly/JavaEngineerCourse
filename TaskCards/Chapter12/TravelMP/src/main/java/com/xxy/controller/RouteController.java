@@ -7,6 +7,7 @@ import com.xxy.domain.Seller;
 import com.xxy.service.CategoryService;
 import com.xxy.service.RouteService;
 import com.xxy.service.SellerService;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin/route")
@@ -64,6 +67,26 @@ public class RouteController {
 
     @RequestMapping("doadd")
     public String doAdd(Route route, @RequestParam("rimageFile") MultipartFile rimageFile, HttpServletRequest request) throws IOException {
+        if (rimageFile != null) {
+            // 项目的部署目录 + img/product/rimage
+            String savePath = request.getServletContext().getRealPath("img/product/rimage/");
+
+            // 保存的文件名称
+            String filename = UUID.randomUUID().toString().replaceAll("-", "").concat(".").concat(FilenameUtils.getExtension(rimageFile.getOriginalFilename()));
+
+            // 如果要保存的文件夹不存在，则创建文件夹
+            File savePathDir = new File(savePath);
+            if (!savePathDir.exists()) {
+                savePathDir.mkdirs();
+            }
+
+            // 保存文件
+            rimageFile.transferTo(new File(savePathDir, filename));
+
+            // 设置route的rimage属性为图片相对路径
+            route.setRimage("img/product/rimage/".concat(filename));
+        }
+
         routeService.add(route);
         return "redirect:/admin/route/page";
     }

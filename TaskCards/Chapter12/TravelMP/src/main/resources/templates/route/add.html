@@ -104,7 +104,7 @@
 
             <div class="page-content">
 				<!-- TODO 文件上传表单设置 -->
-                <form >
+                <form action="/admin/route/doadd" enctype="multipart/form-data" method="post">
                     <div class="form-group">
                         <label for="rname">线路名称：</label>
                         <input type="text" class="form-control" id="rname" name="rname" placeholder="请输入线路名称">
@@ -119,6 +119,7 @@
                         <label for="cid">所属分类：</label>
                         <select class="form-control" id="cid" name="cid">
 						<!-- TODO 回显数据 -->
+                            <option th:each="category: ${categories}" th:value="${category.cid}" th:text="${category.cname}" th:selected="${category.cid} + '' == ${#strings.trim(param.cid)}"></option>
                         </select>
                     </div>
 
@@ -126,6 +127,7 @@
                         <label for="cid">旅游公司：</label>
                         <select class="form-control" id="sid" name="sid">
 						<!-- TODO 回显数据-->
+                            <option th:each="seller: ${sellers}" th:value="${seller.sid}" th:text="${seller.sname}" th:selected="${seller.sid} + '' == ${#strings.trim(param.sid)}"></option>
                         </select>
                     </div>
 
@@ -137,7 +139,15 @@
                     <div class="form-group">
                         <label for="rimageFile">缩略图：</label>
 						<!-- TODO 转换成fileinput -->
-                        <input id="rimageFile" name="rimageFile" type="file" >
+                        <!--方法一：在文件域中设置class="file"-->
+                        <input id="rimageFile" name="rimageFile" class="file" type="file" >
+                        <!--方法二：使用js把文件域转换成fileinput对象-->
+                        <!--<script >-->
+                            <!--$(function(){-->
+                                <!--$("#rimageFile").fileinput({-->
+                                <!--});-->
+                            <!--})-->
+                        <!--</script>-->
                     </div>
 
                     <div class="form-group" style="text-align: center">
