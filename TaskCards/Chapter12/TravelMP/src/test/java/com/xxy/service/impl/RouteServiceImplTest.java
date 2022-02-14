@@ -31,8 +31,7 @@ public class RouteServiceImplTest {
 
     @Test
     public void findById() {
-        Route r = routeService.findById(34);
-        System.out.println(r.getRid() + "\t" + r.getRname() + "\t" + r.getCategory().getCname() +
-                "\t" + r.getSeller().getSname() + "\t" + r.getRouteImgList().size());
+        Route r = routeService.findById(545);
+        System.out.println(r);
     }
 }

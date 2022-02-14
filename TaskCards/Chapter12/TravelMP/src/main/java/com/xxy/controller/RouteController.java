@@ -67,45 +67,54 @@ public class RouteController {
 
     @RequestMapping("doadd")
     public String doAdd(Route route, @RequestParam("rimageFile") MultipartFile rimageFile, HttpServletRequest request) throws IOException {
-        if (rimageFile != null) {
-            // 项目的部署目录 + img/product/rimage
-            String savePath = request.getServletContext().getRealPath("img/product/rimage/");
-
-            // 保存的文件名称
-            String filename = UUID.randomUUID().toString().replaceAll("-", "").concat(".").concat(FilenameUtils.getExtension(rimageFile.getOriginalFilename()));
-
-            // 如果要保存的文件夹不存在，则创建文件夹
-            File savePathDir = new File(savePath);
-            if (!savePathDir.exists()) {
-                savePathDir.mkdirs();
-            }
-
-            // 保存文件
-            rimageFile.transferTo(new File(savePathDir, filename));
-
-            // 设置route的rimage属性为图片相对路径
-            route.setRimage("img/product/rimage/".concat(filename));
-        }
-
+        performRImage(route, rimageFile, request);
         routeService.add(route);
         return "redirect:/admin/route/page";
     }
 
-    @RequestMapping("toupdate/{id}")
-    public String toUpdate(@PathVariable Integer id, Model model) {
+    @RequestMapping("toupdate")
+    public String toUpdate(@RequestParam("id") Integer id, Model model) {
         //查询所有分类生成下拉框
         List<Category> categories = categoryService.find();
         model.addAttribute("categories", categories);
         List<Seller> sellers = sellerService.find(new Seller());
         model.addAttribute("sellers", sellers);
         Route route = routeService.findById(id);
+
+        System.out.println("获取到的route：");
+        System.out.println(route);
+
         model.addAttribute("route", route);
         return "route/update";
     }
 
     @RequestMapping("/doupdate")
     public String doUpdate(Route route, @RequestParam("rimageFile") MultipartFile rimageFile, HttpServletRequest request) throws IOException {
+        performRImage(route, rimageFile, request);
         routeService.update(route);
         return "redirect:/admin/route/page";
+    }
+
+    private void performRImage(Route route, @RequestParam("rimageFile") MultipartFile rimageFile, HttpServletRequest request) throws IOException {
+        // 项目的部署目录 + img/product/rimage
+        String savePath = request.getServletContext().getRealPath("img/product/rimage/");
+
+        // 保存的文件名称
+        String filename = UUID.randomUUID().toString().replaceAll("-", "") + "." + FilenameUtils.getExtension(rimageFile.getOriginalFilename());
+
+        // 如果要保存的文件夹不存在，则创建文件夹
+        File savePathDir = new File(savePath);
+        if (!savePathDir.exists()) {
+            savePathDir.mkdirs();
+        }
+
+        // 保存文件
+        rimageFile.transferTo(new File(savePathDir, filename));
+
+        // 设置route的rimage属性为图片相对路径
+        route.setRimage("img/product/rimage/" + filename);
+
+        System.out.println("更新后的route：");
+        System.out.println(route);
     }
 }

@@ -104,39 +104,58 @@
             <div class="page-content">
 					<!-- TODO 回显数据 -->
 
-                <form action="/admin/route/doupdate" enctype="multipart/form-data" method="post">
+                <form action="/admin/route/doupdate" enctype="multipart/form-data" method="post" th:object="${route}">
+                    <!--千万不要忘了这里隐藏的属性！！！否则找不到更新的记录id-->
+                    <input type="hidden" name="rid" th:value="*{rid}">
 
                     <div class="form-group">
                         <label for="rname">线路名称：</label>
-                        <input type="text" class="form-control" id="rname" name="rname" placeholder="请输入线路名称" >
+                        <input type="text" class="form-control" id="rname" name="rname" placeholder="请输入线路名称" th:value="*{rname}">
                     </div>
 
                     <div class="form-group">
                         <label for="routeIntroduce">线路介绍：</label>
-                        <input type="text" class="form-control" id="routeIntroduce" name="routeIntroduce" placeholder="请输入线路介绍"  >
+                        <input type="text" class="form-control" id="routeIntroduce" name="routeIntroduce" placeholder="请输入线路介绍" th:value="*{routeIntroduce}">
                     </div>
 
                     <div class="form-group">
                         <label for="cid">所属分类：</label>
                         <select class="form-control" id="cid" name="cid">
+                            <!--注意选择的逻辑！！！-->
+                            <option th:each="category: ${categories}" th:value="${category.cid}" th:text="${category.cname}" th:selected="${category.cid} + '' == *{#strings.trim(category.cid)}"></option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="cid">旅游公司：</label>
-                        <select class="form-control" id="sid" name="sid">
+                        <select class="form-control" id="sid" name="sid" th:value="*{seller.sname}">
+                            <!--注意选择的逻辑！！！-->
+                            <option th:each="seller: ${sellers}" th:value="${seller.sid}" th:text="${seller.sname}" th:selected="${seller.sid} + '' == *{#strings.trim(seller.sid)}"></option>
                         </select>
                     </div>
 
 
                     <div class="form-group">
                         <label for="price">单价：</label>
-                        <input type="text" class="form-control" name="price" id="price" placeholder="请输入单价"  />
+                        <input type="text" class="form-control" name="price" id="price" placeholder="请输入单价"  th:value="*{price}"/>
                     </div>
 
                     <div class="form-group">
                         <label for="rimageFile">缩略图：</label>
                         <input id="rimageFile" name="rimageFile" type="file" data-min-file-count="1">
+                        <script th:inline="javascript">
+                            $(function(){
+                                var rimage = '/' + [[${route.rimage}]];
+                                $("#rimageFile").fileinput({
+                                    // initialPreview：数组类型，指定初始化回显的图片列表
+                                    initialPreview: [
+                                        "<img src='" + rimage +"' class='file-preview-image' >"
+                                    ],
+                                    // overwriteInitial：覆盖之前回显的内容
+                                    overwriteInitial: true
+                                });
+                            })
+                        </script>
                     </div>
 
                     <div class="form-group" style="text-align: center">

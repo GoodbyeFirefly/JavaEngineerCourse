@@ -34,6 +34,30 @@ public class Route implements Serializable {
     @TableField(exist = false)
     private Seller seller;//所属商家 使用resultmap的assocation处理
 
+    @TableField(exist = false)
+    private List<RouteImg> routeImgList;//商品详情图片列表,关联属性，mybatis plus不能查，需要配置resultmap使用resultmap的collection处理
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "rid=" + rid +
+                ", rname='" + rname + '\'' +
+                ", price=" + price +
+                ", routeIntroduce='" + routeIntroduce + '\'' +
+                ", rflag='" + rflag + '\'' +
+                ", rdate='" + rdate + '\'' +
+                ", isThemeTour='" + isThemeTour + '\'' +
+                ", count=" + count +
+                ", cid=" + cid +
+                ", rimage='" + rimage + '\'' +
+                ", sid=" + sid +
+                ", sourceId='" + sourceId + '\'' +
+                ", category=" + category +
+                ", seller=" + seller +
+                ", routeImgList=" + routeImgList +
+                '}';
+    }
+
     public Integer getRid() {
         return rid;
     }
@@ -154,6 +178,4 @@ public class Route implements Serializable {
         this.routeImgList = routeImgList;
     }
 
-    @TableField(exist = false)
-    private List<RouteImg> routeImgList;//商品详情图片列表,关联属性，mybatis plus不能查，需要配置resultmap使用resultmap的collection处理
 }
