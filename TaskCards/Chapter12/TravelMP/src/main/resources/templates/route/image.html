@@ -103,11 +103,13 @@
 
             <div class="page-content">
 
-                <form action="/admin/route/doimage" enctype="multipart/form-data" method="post">
+                <form action="/admin/route/doimage" enctype="multipart/form-data" method="post" th:object="${route}">
 					<!-- TODO 处理隐藏域，记录线路ID -->
+                    <input type="hidden" name="rid" th:value="*{rid}">
 
                     <div class="form-group">
                         <label for="bigPicFile">详细大图：</label>
+                        <!--注意html5属性multiple，表示可以多文件上传-->
                         <input id="bigPicFile" name="bigPicFile" type="file" multiple >
                     </div>
                     <div class="form-group">
@@ -124,6 +126,27 @@
 
             </div><!-- /.page-content -->
 			<!-- TODO 处理详细图片回显 -->
+            <script th:inline="javascript">
+                var ri = [[${route.routeImgList}]]; //后台查询的图片列表
+                var bi = []; //回显的大图数组
+                var si = []; //回显的小图数组
+                console.log(ri);
+                for (var i = 0; i < ri.length; i++) {
+                    bi.push("<img src='/" + ri[i].bigpic +"' class='file-preview-image' >");
+                    si.push("<img src='/" + ri[i].smallpic +"' class='file-preview-image' >");
+                }
+                $("#bigPicFile").fileinput({
+                    initialPreview: bi,
+                    overwriteInitial: true,
+                    minFileCount: 1,
+                    maxFileCount: 4
+                });$("#smallPicFile").fileinput({
+                    initialPreview: si,
+                    overwriteInitial: true,
+                    minFileCount: 1,
+                    maxFileCount: 4
+                });
+            </script>
 
         </div>
     </div><!-- /.main-content -->

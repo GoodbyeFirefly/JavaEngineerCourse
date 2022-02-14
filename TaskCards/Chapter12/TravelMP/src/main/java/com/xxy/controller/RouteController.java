@@ -3,8 +3,10 @@ package com.xxy.controller;
 import com.github.pagehelper.PageInfo;
 import com.xxy.domain.Category;
 import com.xxy.domain.Route;
+import com.xxy.domain.RouteImg;
 import com.xxy.domain.Seller;
 import com.xxy.service.CategoryService;
+import com.xxy.service.RouteImgService;
 import com.xxy.service.RouteService;
 import com.xxy.service.SellerService;
 import org.apache.commons.io.FilenameUtils;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +34,8 @@ public class RouteController {
     private CategoryService categoryService;
     @Autowired
     private SellerService sellerService;
+    @Autowired
+    private RouteImgService routeImgService;
 
     @RequestMapping("page")
     public String page(Route route,
@@ -49,8 +54,8 @@ public class RouteController {
         return "route/list";
     }
 
-    @RequestMapping("delete/{id}")
-    public String delete(@PathVariable("id") Integer id) {
+    @RequestMapping("delete")
+    public String delete(@RequestParam("id") Integer id) {
         routeService.delete(id);
         return "redirect:/admin/route/page";
     }
@@ -92,6 +97,52 @@ public class RouteController {
     public String doUpdate(Route route, @RequestParam("rimageFile") MultipartFile rimageFile, HttpServletRequest request) throws IOException {
         performRImage(route, rimageFile, request);
         routeService.update(route);
+        return "redirect:/admin/route/page";
+    }
+
+    @RequestMapping("toimage")
+    public String toImage(@RequestParam("id") Integer id, Model model) {
+        Route route = routeService.findById(id);
+        model.addAttribute("route", route);
+        return "route/image";
+    }
+
+    @RequestMapping("/doimage")
+    public String doImage(Integer rid,
+                          @RequestParam("bigPicFile") MultipartFile[] bigPicFile,
+                          @RequestParam("smallPicFile")MultipartFile[] smallPicFile,
+                          HttpServletRequest request) throws Exception {
+        List<String> bigPic = new ArrayList<>();
+        List<String> smallPic = new ArrayList<>();
+        String path = request.getServletContext().getRealPath("/");
+        for (MultipartFile f : bigPicFile) {
+            File bigPath = new File(path + "img\\product\\big-pic\\");
+            if (!bigPath.exists()) {
+                bigPath.mkdirs();
+            }
+            String fileName = UUID.randomUUID().toString().replace("-", "") + "." + FilenameUtils.getExtension(f.getOriginalFilename());
+            f.transferTo(new File(bigPath, fileName));
+            bigPic.add("img/product/big-pic/" + fileName);
+        }
+
+        for (MultipartFile f : smallPicFile) {
+            File smallPath = new File(path + "img\\product\\small-pic\\");
+            if (!smallPath.exists()) {smallPath.mkdirs();
+            }
+            String fileName = UUID.randomUUID().toString().replace("-", "") + "." + FilenameUtils.getExtension(f.getOriginalFilename());
+            f.transferTo(new File(smallPath, fileName));
+            smallPic.add("img/product/small-pic/" + fileName);
+        }
+        //要添加的图片列表
+        List<RouteImg> ris = new ArrayList<>();
+        for (int i=0; i<bigPic.size(); i++) {
+            RouteImg img = new RouteImg();
+            img.setRid(rid);
+            img.setBigpic(bigPic.get(i));
+            img.setSmallpic(smallPic.get(i));
+            ris.add(img);
+        }
+        routeImgService.saveImg(rid, ris);
         return "redirect:/admin/route/page";
     }
 
